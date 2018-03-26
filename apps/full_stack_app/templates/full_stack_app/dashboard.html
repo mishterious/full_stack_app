@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login and Registration | Success</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        .i_b {
+            display: inline-block;
+            
+        }
+        .m_l{
+            
+            margin-left: 58%;
+        }
+        .m_r{
+            margin-right: 8%;
+            width: 60%;
+        }
+        .v_a{
+            vertical-align: top;
+            width: 30%;
+        }
+        .grey {
+            background-color: lightgrey;
+        }
+        p{
+            margin: 2px;
+        }
+        a {
+            margin: 0px 5px 0px 5px;
+        }
+        div.scroll {
+            width: 100%;
+            height: 20%;
+            overflow: scroll;
+        }
+    </style>
+    <body>
+        <div class = 'grey'> 
+            <h4 class = 'i_b'>Welcome, {{request.session.alias}}!</h4>
+
+            <a href="/books/add" class = 'i_b m_l'>Add Book and Review</a>
+            <a href="/logout" class = 'i_b'>Logout</a>
+        </div>
+
+        <div class='i_b m_r'>
+        <h4>Recent Book Reviews</h4>
+            {% for review in reviews %}
+                <p><a href="/books/{{review.book.id}}">  {{review.book.title}}</a></p>
+                <p>Rating: {{review.rating}}
+                    {% if review.rating == 5 %}
+                        &#9734&#9733&#9734&#9733&#9734
+                    {% elif review.rating == 4 %}
+                        &#9734&#9733&#9734&#9733
+                    {% elif review.rating == 3 %}
+                        &#9734&#9733&#9734
+                    {% elif review.rating == 2 %}
+                        &#9734&#9733
+                    {% elif review.rating == 1 %}
+                        &#9734
+                    {% endif %}                    
+                </p>
+                <p><a href="/users/{{review.user.id}}">{{review.user.name}}</a> says: <i>{{review.content}}</i> </p>
+                <p>{{review.created_at}}</p>
+                <br>
+            {% endfor %}
+        </div>
+
+        <div class='i_b v_a'>
+            <h4>Other Books with Reviews:</h4>
+            <div class="scroll">
+                {% for book in books %}
+                    <p><a href="/books/{{book.id}}">{{book.title}}</a></p>
+                {% endfor %}
+
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login and Registration | Success</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        .i_b {
+            display: inline-block;
+        }
+        .m_l{
+            margin-left: 60%;
+        }
+        a{
+            padding: 0 5px 0 5px;
+        }
+        p{
+            margin: 5px;
+        }
+    </style>
+    <body>
+        <div class> 
+            <a href="/books" class='m_l'>Home</a>
+            <a href="/books/add" class = 'i_b'>Add Book and Review</a>
+            <a href="/logout" class = 'i_b'>Logout</a>
+        </div>
+
+        <h2 class = 'i_b'>User Alias {{user.alias}} </h2>
+        <p>Name: {{user.name}} </p>
+        <p>Email: {{user.email}} </p>
+        <p> Total Reviews: {{count}} </p>
+
+        <h3>Posted Reviews on the following books:</h3>
+            {% for review in reviews %}
+            <p><a href="/books/{{review.book.id}}">{{review.book.title}}</a></p>
+            {% endfor %}
+    </body>
+</html>

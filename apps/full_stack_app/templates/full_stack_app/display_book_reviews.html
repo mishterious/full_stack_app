@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add a Book and Review</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        .i_b {
+            display: inline-block;
+        }
+        .m_l{
+            margin-left: 70%;
+        }
+        .m{
+            margin-left: 10%;
+        }
+       
+        p{
+            margin: 2px 0px 2px 0px;
+            padding:  2px 0px 2px 0px;
+        }
+        #va_top{
+            vertical-align: top;
+            position: relative;
+        }
+        .l_box{
+            width: 55%;
+            display: inline-block;
+        }
+        .r_box{
+            width: 30%;
+            margin-left: 5%;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .a_top{
+            margin-right: 10px;
+        }
+    </style>
+    <body>
+        <div> 
+            <a href="/books" class = 'a_top i_b m_l'>Home</a>
+            <a href="/logout" class = 'a_top i_b'>Logout</a>
+        </div>
+
+        <h3>{{book.title}}</h3>
+        <p>Author: {{book.author.name}}</p>
+
+        <div class='l_box'>
+            <h3>Reviews:</h3>
+            {% for review in reviews %}
+            <hr >
+            <p>Rating: {{review.rating}}
+                {% if review.rating == 5 %}
+                    &#9734&#9733&#9734&#9733&#9734
+                {% elif review.rating == 4 %}
+                    &#9734&#9733&#9734&#9733
+                {% elif review.rating == 3 %}
+                    &#9734&#9733&#9734
+                {% elif review.rating == 2 %}
+                    &#9734&#9733
+                {% elif review.rating == 1 %}
+                    &#9734
+                {% endif %}
+            </p>
+            <p><a href="/users/{{review.user.id}}">{{review.user.name}}</a> says: <i>{{review.content}}</i></p>
+            <p><i>Posted on {{review.created_at}} </i>
+                {% if request.session.id == review.user.id  %}
+                    <a href="/delete/{{review.id}}" class = 'm'>Delete this Review</a>
+                {% endif %}
+            </p>
+            {% endfor %}
+
+        </div>
+        <div class='r_box'>
+            
+            <form action="/books/add_process" method ='post'>
+            {% csrf_token %}
+                <h4>Add a review</h4>
+                <input type="hidden" name="title" value="{{book.title}}" >
+                <textarea name ='review' rows="8" cols="40"></textarea>
+                <p>Rating 
+                <select name="rating">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+                stars    
+                </p>
+                <button type='submit'>Submit Review</button>
+            </form>
+        </div>
+    </body>
+</html>
