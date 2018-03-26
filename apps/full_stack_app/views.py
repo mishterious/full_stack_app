@@ -105,13 +105,32 @@ def books_dashboard(request):
     }
     return render(request, 'full_stack_app/dashboard.html', data)
 
+
+def movies_add_dashboard(request):
+    if 'login' not in request.session:
+        return redirect('/')
+    if request.session['login']==False:
+        return redirect('/')
+
+    data = {
+        'movies': Movie.objects.all().order_by('-created_at')[:3],
+        'books': Book.objects.all(),
+        'authors': Author.objects.all(),
+        'actor': Actor.objects.all()
+    }
+    return render(request, 'full_stack_app/add_movie.html', data)
+
+
 def books_add_dashboard(request):
     if 'login' not in request.session:
         return redirect('/')
     if request.session['login']==False:
         return redirect('/')
     
-    data = {'authors': Author.objects.all()}
+    data = {
+        'movies': Movie.objects.all().order_by('-created_at')[:3],
+        'authors': Author.objects.all()
+    }
 
     return render(request, 'full_stack_app/add_book.html', data)
 

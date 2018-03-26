@@ -39,9 +39,10 @@
     </style>
     <body>
         <div class = 'grey'> 
-            <h4 class = 'i_b'>Welcome, {{request.session.alias}}!</h4>
+            <h4 class = 'i_b'>Welcome, {{request.session.first_name}}!</h4>
 
-            <a href="/books/add" class = 'i_b m_l'>Add Book and Review</a>
+            <a href="/movies/add" class= 'i_b m_l'>Add a Movie</a>
+            <a href="/books/add" class = 'i_b'>Add Book and Review</a>
             <a href="/logout" class = 'i_b'>Logout</a>
         </div>
 

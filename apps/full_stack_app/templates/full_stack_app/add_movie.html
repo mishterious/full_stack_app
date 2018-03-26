@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add a Book and Review</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        .i_b {
+            display: inline-block;
+        }
+        .m_l{
+            margin-left: 30%;
+        }
+        .grey {
+            background-color: lightgrey;
+        }
+        p{
+            margin: 2px 0px 2px 0px;
+            padding:  2px 0px 2px 0px;
+        }
+        #va_top{
+            vertical-align: top;
+            position: relative;
+        }
+        .m_top{
+            margin-right: 10px
+        }
+    </style>
+    <body>
+        <div class = 'grey'> 
+            <h4 class = 'i_b'>Add a New Book Title and a Review</h4>
+            <a href="/books" class = 'i_b m_l m_top' >Home</a>
+            <a href="/logout" class = 'i_b' >Logout</a>
+        </div>
+
+        <form action="/books/add_process" method = 'post' >
+            {% csrf_token %}
+            <p>Movie Title: <input type="text" name = 'movie'></p>
+            <p>Who wrote the script?: 
+            <select name="authorDropDown">
+                {% for author in authors %}
+                <option value="{{author.name}}">{{author.name}}</option>
+                {% endfor %}
+            </select>
+            <p>Or add a new actor: <input type="text" name = 'author'></p>
+            <select name="actorDropDown">
+                {% for actor in actors %}
+                <option value="{{actor.name}}">{{author.name}}</option>
+                {% endfor %}
+            </select>
+            </p>
+            <p>Or add a new actor: <input type="text" name = 'actor'></p>
+            <div>
+                <p class = 'i_b'>Review:<p><textarea class ='i_b' name="review" cols="50" rows="10"></textarea>
+            </div>
+            <p class = 'i_b'>Rating:</p> 
+            <select name="rating">
+                <option value="5">5</option>   
+                <option value="4">4</option>  
+                <option value="3">3</option>  
+                <option value="2">2</option>  
+                <option value="1">1</option>  
+            </select>
+            <br>
+            <button type='submit'>Add Book and Review</button>
+        </form>
+    
+    
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    
+    </body>
+</html>

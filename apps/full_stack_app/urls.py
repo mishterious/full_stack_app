@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^logout$', views.logout),
     url(r'^books/add_process$', views.process_all_info), 
     url(r'^users/(?P<id>\d+)$', views.display_user), 
+    url(r'^movies/add$', views.movies_add_dashboard), 
 ]

@@ -33,6 +33,7 @@ class UserManager(models.Manager):
 
         return errors
 
+
 class AuthorManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
@@ -40,11 +41,20 @@ class AuthorManager(models.Manager):
             errors['author_name_length'] = "Author's name should be more than 2 characters"
         return errors
 
+
 class BookManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
         if len(postData['title']) == 0: 
             errors['title_blank'] = "Title can't be blank"
+        return errors
+
+
+class MovieManager(models.Manager):
+    def basic_validator(self, postData):
+        errors = {}
+        if len(postData['movie']) == 0: 
+            errors['movie_blank'] = "Movie name can't be blank"
         return errors
 
 
@@ -57,6 +67,7 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
 
+
 class Author(models.Model):
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -67,8 +78,9 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(Author, related_name = "books")
+    author = models.ForeignKey(Author, related_name="books")
     objects = BookManager()
+
 
 class Review(models.Model):
     rating = models.IntegerField()
@@ -77,4 +89,20 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, related_name='reviews')
     book = models.ForeignKey(Book, related_name='reviews')
+
+
+class Actor(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Movie(models.Model):
+    movie = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    book = models.ForeignKey(Book, related_name='movies')
+    author = models.ForeignKey(Author, related_name='movies')
+    actor = models.ForeignKey(Actor, related_name='movies')
+    objects = MovieManager()
 
